@@ -1,0 +1,102 @@
+create table Doctors(
+    doctor_id bigint(20) UNSIGEND NOT NULL auto_increment primary key,
+    Name varchar(50) NoT NULL,
+    specialization varchar(255) not null,
+    Phone varchar(50) not null,
+    create_at timestamp not null default current_timestamp(),
+    update_at timestamp not null default current_timestamp() on update current_timestamp()
+);
+-- Inserting dummy data into Doctors table
+INSERT INTO Doctors ( name, specialization, phone)
+ VALUES
+    ('Dr. John Doe', 'Cardiologist', '555-1234'),
+    ('Dr. Jane Smith', 'Neurologist', '555-5678'),
+    ('Dr. Emily Davis', 'Pediatrician', '555-8765'),
+    ('Dr. Michael Brown', 'Orthopedic', '555-4321'),
+    ('Dr. Sarah Wilson', 'Dermatologist', '555-6789');
+
+
+
+
+create table Patients(
+    patient_id bigint(20) UNSIGEND NOT NULL auto_increment primary key,
+    Name varchar(50) NoT NULL,
+    Age int not null,
+    gender varchar(50) not null,
+    Phone varchar(50) not null,
+    create_at timestamp not null default current_timestamp(),
+    update_at timestamp not null default current_timestamp() on update current_timestamp()
+);
+-- Inserting dummy data into Patients table
+INSERT INTO Patients (name, age, gender, phone) 
+VALUES
+    ('Alice Johnson', 29, 'Female', '555-1122'),
+    ('Bob Lee', 35, 'Male', '555-3344'),
+    ('Charlie Brown', 45, 'Male', '555-5566'),
+    ('Diana Green', 30, 'Female', '555-7788'),
+    ('Eva White', 27, 'Female', '555-9900');
+
+
+
+
+
+create table Appointments(
+    appointment_id bigint(20) UNSIGEND NOT NULL auto_increment primary key,
+    date INT NoT NULL,
+    Time int not null,
+    state VARCHAR(255) not null,
+    patient_id INT,
+    department_id INT,
+    create_at timestamp not null default current_timestamp(),
+    update_at timestamp not null default current_timestamp() on update current_timestamp(),
+    FOREIGN KEY (patient_id) REFERENCES Patients(patient_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (department_id) REFERENCES Departments(department_id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+-- Inserting dummy data into Appointment table
+INSERT INTO Appointment ( date, time, state,patient_id,department_id) 
+VALUES
+    ('2024-12-22', '10:00:00', 'Scheduled',1,1),
+    ('2024-12-22', '11:00:00', 'Scheduled'2,2),
+    ('2024-12-22', '12:00:00', 'Completed'3,3),
+    ('2024-12-22', '13:00:00', 'Scheduled'4,4),
+    ('2024-12-22', '14:00:00', 'Cancelled'5,5);
+
+
+
+
+create table Departments(
+    department_id bigint(20) UNSIGEND NOT NULL auto_increment primary key,
+    Name varchar(50) NoT NULL,
+    location varchar(100),
+    create_at timestamp not null default current_timestamp(),
+    update_at timestamp not null default current_timestamp() on update current_timestamp()
+);
+-- Inserting dummy data into Departments table
+INSERT INTO Departments (department_id, name, location) 
+VALUES
+    ('Cardiology', 'Room 101'),
+    ('Neurology', 'Room 102'),
+    ('Pediatrics', 'Room 103'),
+    ('Orthopedics', 'Room 104'),
+    ('Dermatology', 'Room 105');
+
+
+
+
+create table Appintment_Department(
+    appointment_id INT,
+    department_id INT,
+    PRIMARY KEY(appint_id,department_id),
+    create_at timestamp not null default current_timestamp(),
+    update_at timestamp not null default current_timestamp() on update current_timestamp(),
+    FOREIGN KEY (appointment_id) REFERENCES Appointments(appointment_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (department_id) REFERENCES Departments(epartment_id) ON DELETE RESTRICT ON UPDATE CASCADE
+);
+-- Inserting dummy data into Appintment_Department
+INSERT INTO Appintment_Department(appointment_id,department_id)
+VALUES
+    (1,1),
+    (2,2),
+    (3,3),
+    (4,4),
+    (5,5);
